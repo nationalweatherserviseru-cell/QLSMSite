@@ -24,12 +24,6 @@
             padding: 20px;
         }
 
-        header {
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -51,6 +45,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
             border: 1px solid #444;
+            flex-wrap: wrap;
         }
 
         .main-nav a {
@@ -71,7 +66,55 @@
             background: #5865f2;
         }
 
-        main {
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2a2a2a;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.7);
+            z-index: 1;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #3a3a3a;
+            cursor: pointer;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #5865f2;
+        }
+
+        .dropdown-content a.disabled-link {
+            color: #888;
+            pointer-events: none;
+            background-color: #222;
+            cursor: not-allowed;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .main-content {
             display: flex;
             gap: 30px;
             flex-wrap: wrap;
@@ -168,89 +211,14 @@
             background: rgba(255, 68, 68, 0.1);
         }
 
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .tab-button {
-            background: #333;
-            color: white;
-            border: 1px solid #555;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 16px;
-        }
-
-        .tab-button.active {
-            background: #5865f2;
-            border-color: #5865f2;
-        }
-
-        .tab-button:hover {
-            background: #444;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #2a2a2a;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.7);
-            z-index: 1;
-            border-radius: 5px;
-            border: 1px solid #444;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #3a3a3a;
-            cursor: pointer;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #5865f2;
-        }
-
-        .dropdown-content a.disabled-link {
-            color: #888;
-            pointer-events: none;
-            background-color: #222;
-            cursor: not-allowed;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
         form {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            max-width: 600px;
         }
 
-        form h3 {
+        form h2 {
             color: #fff;
             margin-bottom: 10px;
         }
@@ -329,6 +297,7 @@
             border-radius: 5px;
             text-align: center;
             font-size: 14px;
+            margin: 10px 0;
         }
 
         .success-message {
@@ -350,85 +319,6 @@
             text-align: center;
             margin-bottom: 10px;
         }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .main-content {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-        }
-
-        .modal-content {
-            background: #2a2a2a;
-            margin: 15% auto;
-            padding: 30px;
-            border: 2px solid #ff4444;
-            border-radius: 10px;
-            width: 400px;
-            max-width: 90%;
-            text-align: center;
-        }
-
-        .modal-content h3 {
-            color: #ff4444;
-            margin-bottom: 20px;
-        }
-
-        .modal-content p {
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .modal-buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .confirm-btn {
-            background: #ff4444;
-            color: white;
-        }
-
-        .confirm-btn:hover {
-            background: #cc0000;
-        }
-
-        .cancel-btn {
-            background: #333;
-            color: white;
-            border: 1px solid #555;
-        }
-
-        .cancel-btn:hover {
-            background: #444;
-        }
     </style>
 </head>
 <body>
@@ -440,26 +330,12 @@
         <div class="main-nav">
             <a onclick="showPage('home')" class="active">Главная</a>
             <a onclick="showPage('complaint-page')">Жалоба</a>
-            <a onclick="showPage('appeal-page')">Апелляции</a>
             <a onclick="showPage('rules-page')">Правила</a>
             <div class="dropdown" style="margin-left: auto;">
                 <a class="dropbtn">Заявки ▼</a>
                 <div class="dropdown-content">
                     <a onclick="showPage('admin-form-page')">Администрация</a>
                     <a class="disabled-link">Разработчики (Набор закрыт)</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Модальное окно подтверждения -->
-        <div id="confirmModal" class="modal">
-            <div class="modal-content">
-                <h3>⚠️ Подтверждение</h3>
-                <p>Вы уверены, что хотите подать апелляцию?</p>
-                <p style="color: #ffaa00;">Следующую апелляцию вы сможете подать только через 2 дня!</p>
-                <div class="modal-buttons">
-                    <button class="confirm-btn" onclick="submitAppeal()">Да, подать</button>
-                    <button class="cancel-btn" onclick="closeModal()">Отмена</button>
                 </div>
             </div>
         </div>
@@ -493,17 +369,6 @@
                 <div class="file-info">Максимальный размер файла: 8 МБ</div>
                 <div id="complaintWarning" class="cooldown-warning" style="display: none;"></div>
                 <button type="submit" id="complaintSubmit">Отправить жалобу</button>
-            </form>
-        </div>
-
-        <!-- Страница апелляции -->
-        <div id="appeal-page" class="page">
-            <h2>Апелляция на наказание</h2>
-            <form id="appealForm">
-                <input type="text" id="appeal-nick" placeholder="Ваш ник в Discord" required>
-                <textarea id="appeal-reason" placeholder="Почему мы должны снять с вас наказание?" rows="5" required></textarea>
-                <div id="appealWarning" class="cooldown-warning" style="display: none;"></div>
-                <button type="button" id="appealSubmitBtn" onclick="showConfirmModal()">Отправить апелляцию</button>
             </form>
         </div>
 
@@ -589,13 +454,12 @@
     </div>
 
     <script>
-        const COMPLAINT_COOLDOWN = 60 * 60 * 1000;
-        const ADMIN_COOLDOWN = 24 * 60 * 60 * 1000;
-        const APPEAL_COOLDOWN = 2 * 24 * 60 * 60 * 1000;
-        const MAX_FILE_SIZE = 8 * 1024 * 1024;
+        // Настройки кулдаунов
+        const COMPLAINT_COOLDOWN = 60 * 60 * 1000; // 1 час
+        const ADMIN_COOLDOWN = 24 * 60 * 60 * 1000; // 1 день
+        const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8 МБ
 
-        let pendingAppeal = null;
-
+        // Функция проверки кулдауна
         function checkCooldown(type) {
             const lastSubmit = localStorage.getItem(`last_${type}_submit`);
             if (!lastSubmit) return { canSubmit: true, timeLeft: 0 };
@@ -605,7 +469,6 @@
             
             if (type === 'complaint') cooldownTime = COMPLAINT_COOLDOWN;
             else if (type === 'admin') cooldownTime = ADMIN_COOLDOWN;
-            else if (type === 'appeal') cooldownTime = APPEAL_COOLDOWN;
             
             if (timePassed < cooldownTime) {
                 const timeLeft = cooldownTime - timePassed;
@@ -614,15 +477,12 @@
             return { canSubmit: true, timeLeft: 0 };
         }
 
+        // Форматирование времени
         function formatTimeLeft(ms, type) {
             if (type === 'complaint') {
                 const minutes = Math.floor(ms / 60000);
                 const seconds = Math.floor((ms % 60000) / 1000);
                 return `${minutes} минут ${seconds} секунд`;
-            } else if (type === 'appeal') {
-                const days = Math.floor(ms / (24 * 60 * 60 * 1000));
-                const hours = Math.floor((ms % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-                return `${days} дней ${hours} часов`;
             } else {
                 const hours = Math.floor(ms / 3600000);
                 const minutes = Math.floor((ms % 3600000) / 60000);
@@ -630,17 +490,15 @@
             }
         }
 
+        // Обновление предупреждений
         function updateWarnings() {
             const complaintStatus = checkCooldown('complaint');
             const adminStatus = checkCooldown('admin');
-            const appealStatus = checkCooldown('appeal');
             
             const complaintWarning = document.getElementById('complaintWarning');
             const adminWarning = document.getElementById('adminWarning');
-            const appealWarning = document.getElementById('appealWarning');
             const complaintBtn = document.getElementById('complaintSubmit');
             const adminBtn = document.getElementById('adminSubmit');
-            const appealBtn = document.getElementById('appealSubmitBtn');
 
             if (!complaintStatus.canSubmit) {
                 const timeLeft = formatTimeLeft(complaintStatus.timeLeft, 'complaint');
@@ -661,18 +519,9 @@
                 adminWarning.style.display = 'none';
                 adminBtn.disabled = false;
             }
-
-            if (!appealStatus.canSubmit) {
-                const timeLeft = formatTimeLeft(appealStatus.timeLeft, 'appeal');
-                appealWarning.textContent = `Вы уже подавали апелляцию. Следующую можно подать через ${timeLeft}`;
-                appealWarning.style.display = 'block';
-                appealBtn.disabled = true;
-            } else {
-                appealWarning.style.display = 'none';
-                appealBtn.disabled = false;
-            }
         }
 
+        // Показ сообщения
         function showMessage(text, type) {
             const messageDiv = document.createElement('div');
             messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
@@ -686,6 +535,7 @@
             }, 5000);
         }
 
+        // Переключение страниц
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -706,57 +556,8 @@
             updateWarnings();
         }
 
-        function showConfirmModal() {
-            const status = checkCooldown('appeal');
-            if (!status.canSubmit) {
-                return;
-            }
-            
-            const nick = document.getElementById('appeal-nick').value;
-            const reason = document.getElementById('appeal-reason').value;
-            
-            if (!nick || !reason) {
-                showMessage('Заполните все поля', 'error');
-                return;
-            }
-            
-            pendingAppeal = { nick, reason };
-            document.getElementById('confirmModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('confirmModal').style.display = 'none';
-            pendingAppeal = null;
-        }
-
-        async function submitAppeal() {
-            if (!pendingAppeal) return;
-            
-            closeModal();
-            
-            const submitButton = document.getElementById('appealSubmitBtn');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Отправка...';
-            
-            const content = `**Новая апелляция**\n**Ник:** ${pendingAppeal.nick}\n**Причина:** ${pendingAppeal.reason}`;
-            
-            const success = await sendToAPI('/api/send-appeal', content, null);
-            
-            if (success) {
-                localStorage.setItem('last_appeal_submit', Date.now().toString());
-                showMessage('Апелляция успешно отправлена', 'success');
-                document.getElementById('appealForm').reset();
-                updateWarnings();
-            } else {
-                showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
-            }
-            
-            submitButton.disabled = false;
-            submitButton.textContent = 'Отправить апелляцию';
-            pendingAppeal = null;
-        }
-
-        async function sendToAPI(endpoint, content, file) {
+        // Отправка жалобы
+        async function submitComplaint(content, file) {
             try {
                 const formData = new FormData();
                 formData.append('content', content);
@@ -765,7 +566,7 @@
                     formData.append('file', file);
                 }
                 
-                const response = await fetch(endpoint, {
+                const response = await fetch('/api/send-complaint', {
                     method: 'POST',
                     body: formData
                 });
@@ -773,21 +574,38 @@
                 const data = await response.json();
                 return data.success;
             } catch (error) {
-                console.error('Ошибка:', error);
                 return false;
             }
         }
 
+        // Отправка анкеты
+        async function submitAdmin(content) {
+            try {
+                const formData = new FormData();
+                formData.append('content', content);
+                
+                const response = await fetch('/api/send-admin', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                return data.success;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Обработчики событий
         document.addEventListener('DOMContentLoaded', function() {
             setInterval(updateWarnings, 1000);
             
+            // Обработчик жалобы
             document.getElementById('complaintForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 const status = checkCooldown('complaint');
-                if (!status.canSubmit) {
-                    return;
-                }
+                if (!status.canSubmit) return;
                 
                 const submitButton = document.getElementById('complaintSubmit');
                 submitButton.disabled = true;
@@ -806,28 +624,27 @@
                 
                 const content = `**Новая жалоба**\n**Нарушитель:** ${offenderName}\n**Нарушение:** ${violationDesc}`;
                 
-                const success = await sendToAPI('/api/send-complaint', content, proofFile);
+                const success = await submitComplaint(content, proofFile);
                 
                 if (success) {
                     localStorage.setItem('last_complaint_submit', Date.now().toString());
                     showMessage('Жалоба успешно отправлена', 'success');
                     this.reset();
-                    updateWarnings();
                 } else {
                     showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
                 }
                 
                 submitButton.disabled = false;
                 submitButton.textContent = 'Отправить жалобу';
+                updateWarnings();
             });
             
+            // Обработчик анкеты администрации
             document.getElementById('adminForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 const status = checkCooldown('admin');
-                if (!status.canSubmit) {
-                    return;
-                }
+                if (!status.canSubmit) return;
                 
                 const submitButton = document.getElementById('adminSubmit');
                 submitButton.disabled = true;
@@ -845,19 +662,19 @@
                 
                 const content = `**Новая анкета в Администрацию**\n**Discord ник:** ${discordNick}\n**Возраст:** ${age}\n**Как узнал:** ${how}\n**Telegram:** ${tg}\n**VK:** ${vk}\n**Ранг:** ${rank}\n**Блокировки:** ${bans || 'Нет'}\n**Готов к обзвону:** ${call}\n**Микрофон:** ${mic}`;
                 
-                const success = await sendToAPI('/api/send-admin', content, null);
+                const success = await submitAdmin(content);
                 
                 if (success) {
                     localStorage.setItem('last_admin_submit', Date.now().toString());
                     showMessage('Анкета успешно отправлена', 'success');
                     this.reset();
-                    updateWarnings();
                 } else {
                     showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
                 }
                 
                 submitButton.disabled = false;
                 submitButton.textContent = 'Отправить анкету';
+                updateWarnings();
             });
             
             updateWarnings();
