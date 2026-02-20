@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qullysuim Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1a1a1a 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #fff;
+            text-shadow: 0 0 5px #7289da;
+            font-size: 2.5em;
+        }
+
+        main {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .left-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .right-column {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid #444;
+        }
+
+        .description {
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #7289da;
+        }
+
+        .description h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .widget iframe {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 350px;
+            height: 500px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .tab-button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .tab-button.active {
+            background: #5865f2;
+            border-color: #5865f2;
+        }
+
+        .tab-button:hover {
+            background: #444;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2a2a2a;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.7);
+            z-index: 1;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #5865f2;
+        }
+
+        .dropdown-content a.disabled-link {
+            color: #888;
+            pointer-events: none;
+            background-color: #222;
+            cursor: not-allowed;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        form input, form textarea {
+            padding: 12px;
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        form input[type="file"] {
+            padding: 10px;
+            background: #333;
+            border: 1px dashed #7289da;
+            cursor: pointer;
+        }
+
+        form input[type="file"]::file-selector-button {
+            background: #5865f2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #5865f2;
+        }
+
+        form label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        form button {
+            padding: 12px;
+            background: #5865f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        form button:hover {
+            background: #4752c4;
+        }
+
+        form button:disabled {
+            background: #444;
+            cursor: not-allowed;
+        }
+
+        .file-info {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: -5px;
+        }
+
+        .cooldown-warning {
+            background: #ffaa0022;
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #00aa0022;
+            border: 1px solid #00ff00;
+            color: #aaffaa;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            background: #aa000022;
+            border: 1px solid #ff0000;
+            color: #ffaaaa;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Qullysuim Community</h1>
+        </header>
+
+        <main>
+            <div class="left-column">
+                <div class="description">
+                    <h2>Qullysuim — Сервер для общения и дружбы.</h2>
+                    <p>Позитивное, открытое и дружелюбное комьюнити без токсичности. Найди единомышленников для разговоров, игр и совместного досуга. Мы ждем именно тебя! Начни знакомство прямо сейчас.</p>
+                </div>
+                <div class="widget">
+                    <iframe src="https://discord.com/widget?id=1455582068695109777&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="showTab('complaint')">Жалоба</button>
+                    <div class="dropdown">
+                        <button class="tab-button dropbtn">Заявки ▼</button>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="showTab('admin-form')">Администрация</a>
+                            <a href="#" class="disabled-link" onclick="showTab('dev-form')">Разработчики (Набор закрыт)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="complaint" class="tab-content active">
+                    <h3>Подать жалобу на участника</h3>
+                    <form id="complaintForm">
+                        <input type="text" id="offender-name" placeholder="Ник нарушителя" required>
+                        <textarea id="violation-desc" placeholder="Что он нарушил?" rows="3" required></textarea>
+                        <input type="file" id="proof-file" accept="image/*,.pdf,.txt,.doc,.docx">
+                        <div class="file-info">Максимальный размер файла: 8 МБ</div>
+                        <div id="complaintWarning" class="cooldown-warning" style="display: none;"></div>
+                        <button type="submit" id="complaintSubmit">Отправить жалобу</button>
+                    </form>
+                </div>
+
+                <div id="admin-form" class="tab-content">
+                    <h3>Анкета в Администрацию</h3>
+                    <form id="adminForm">
+                        <input type="text" id="admin-discord" placeholder="Ваш ник в Discord" required>
+                        <input type="number" id="admin-age" placeholder="Сколько вам лет?" required>
+                        <input type="text" id="admin-how" placeholder="Как узнали о сервере?" required>
+                        <input type="text" id="admin-tg" placeholder="Ваш Telegram юзернейм" required>
+                        <input type="url" id="admin-vk" placeholder="Ваш VK (ссылка)" required>
+                        <input type="text" id="admin-rank" placeholder="Ваш ранг (/rank в корзине)" required>
+                        <textarea id="admin-bans" placeholder="Были ли блокировки? Если да, то какие?" rows="2"></textarea>
+                        <label>
+                            <input type="checkbox" id="admin-call"> Готовы пройти обзвон?
+                        </label>
+                        <label>
+                            <input type="checkbox" id="admin-mic"> Есть микрофон?
+                        </label>
+                        <div id="adminWarning" class="cooldown-warning" style="display: none;"></div>
+                        <button type="submit" id="adminSubmit">Отправить анкету</button>
+                    </form>
+                </div>
+
+                <div id="dev-form" class="tab-content">
+                    <h3 style="color: gray; text-align: center;">Набор разработчиков временно закрыт</h3>
+                    <p style="color: #aaa; text-align: center; margin-top: 20px;">Следите за обновлениями на сервере Discord</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const COMPLAINT_WEBHOOK = "https://discord.com/api/webhooks/1464345787067535452/4RI1poDTMkQRhFGRyPbycsGFZHXza0b55gCuELtXAMEzNkovCdV4-4zPegnf1M4XeMJy";
+        const ADMIN_WEBHOOK = "https://discord.com/api/webhooks/1474132958758572083/GJez82EbK5h5TLuQ9uhQgyDj8L_PIu8I7URC0MAdV9KaTkgz5AlmsIk-Hm7VhYJZ04uV";
+
+        const COMPLAINT_COOLDOWN = 60 * 60 * 1000;
+        const ADMIN_COOLDOWN = 24 * 60 * 60 * 1000;
+        const MAX_FILE_SIZE = 8 * 1024 * 1024;
+
+        function checkCooldown(type) {
+            const lastSubmit = localStorage.getItem(`last_${type}_submit`);
+            if (!lastSubmit) return { canSubmit: true, timeLeft: 0 };
+            
+            const timePassed = Date.now() - parseInt(lastSubmit);
+            const cooldownTime = type === 'complaint' ? COMPLAINT_COOLDOWN : ADMIN_COOLDOWN;
+            
+            if (timePassed < cooldownTime) {
+                const timeLeft = cooldownTime - timePassed;
+                return { canSubmit: false, timeLeft: timeLeft };
+            }
+            return { canSubmit: true, timeLeft: 0 };
+        }
+
+        function formatTimeLeft(ms, type) {
+            if (type === 'complaint') {
+                const minutes = Math.floor(ms / 60000);
+                const seconds = Math.floor((ms % 60000) / 1000);
+                return `${minutes} минут ${seconds} секунд`;
+            } else {
+                const hours = Math.floor(ms / 3600000);
+                const minutes = Math.floor((ms % 3600000) / 60000);
+                return `${hours} часов ${minutes} минут`;
+            }
+        }
+
+        function updateWarnings() {
+            const complaintStatus = checkCooldown('complaint');
+            const adminStatus = checkCooldown('admin');
+            
+            const complaintWarning = document.getElementById('complaintWarning');
+            const adminWarning = document.getElementById('adminWarning');
+            const complaintBtn = document.getElementById('complaintSubmit');
+            const adminBtn = document.getElementById('adminSubmit');
+
+            if (!complaintStatus.canSubmit) {
+                const timeLeft = formatTimeLeft(complaintStatus.timeLeft, 'complaint');
+                complaintWarning.textContent = `Вы уже отправляли жалобу. Следующую можно отправить через ${timeLeft}`;
+                complaintWarning.style.display = 'block';
+                complaintBtn.disabled = true;
+            } else {
+                complaintWarning.style.display = 'none';
+                complaintBtn.disabled = false;
+            }
+
+            if (!adminStatus.canSubmit) {
+                const timeLeft = formatTimeLeft(adminStatus.timeLeft, 'admin');
+                adminWarning.textContent = `Вы уже отправляли анкету. Следующую можно отправить через ${timeLeft}`;
+                adminWarning.style.display = 'block';
+                adminBtn.disabled = true;
+            } else {
+                adminWarning.style.display = 'none';
+                adminBtn.disabled = false;
+            }
+        }
+
+        function showMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.textContent = text;
+            
+            const activeTab = document.querySelector('.tab-content.active');
+            activeTab.insertBefore(messageDiv, activeTab.firstChild);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            if (tabId === 'complaint') {
+                const buttons = document.querySelectorAll('.tab-button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                if (buttons.length > 0) buttons[0].classList.add('active');
+            }
+        }
+
+        async function sendToDiscord(webhookUrl, content, file) {
+            try {
+                const formData = new FormData();
+                formData.append('content', content);
+                
+                if (file) {
+                    formData.append('file', file);
+                }
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('Ошибка:', error);
+                return false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setInterval(updateWarnings, 1000);
+            
+            document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const status = checkCooldown('complaint');
+                if (!status.canSubmit) {
+                    return;
+                }
+                
+                const submitButton = document.getElementById('complaintSubmit');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Отправка...';
+                
+                const offenderName = document.getElementById('offender-name').value;
+                const violationDesc = document.getElementById('violation-desc').value;
+                const proofFile = document.getElementById('proof-file').files[0];
+                
+                if (proofFile && proofFile.size > MAX_FILE_SIZE) {
+                    showMessage('Файл слишком большой. Максимальный размер 8 МБ', 'error');
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Отправить жалобу';
+                    return;
+                }
+                
+                const content = `**Новая жалоба**\n**Нарушитель:** ${offenderName}\n**Нарушение:** ${violationDesc}`;
+                
+                const success = await sendToDiscord(COMPLAINT_WEBHOOK, content, proofFile);
+                
+                if (success) {
+                    localStorage.setItem('last_complaint_submit', Date.now().toString());
+                    showMessage('Жалоба успешно отправлена', 'success');
+                    this.reset();
+                    updateWarnings();
+                } else {
+                    showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
+                }
+                
+                submitButton.disabled = false;
+                submitButton.textContent = 'Отправить жалобу';
+            });
+            
+            document.getElementById('adminForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const status = checkCooldown('admin');
+                if (!status.canSubmit) {
+                    return;
+                }
+                
+                const submitButton = document.getElementById('adminSubmit');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Отправка...';
+                
+                const discordNick = document.getElementById('admin-discord').value;
+                const age = document.getElementById('admin-age').value;
+                const how = document.getElementById('admin-how').value;
+                const tg = document.getElementById('admin-tg').value;
+                const vk = document.getElementById('admin-vk').value;
+                const rank = document.getElementById('admin-rank').value;
+                const bans = document.getElementById('admin-bans').value;
+                const call = document.getElementById('admin-call').checked ? 'Да' : 'Нет';
+                const mic = document.getElementById('admin-mic').checked ? 'Да' : 'Нет';
+                
+                const content = `**Новая анкета в Администрацию**\n**Discord ник:** ${discordNick}\n**Возраст:** ${age}\n**Как узнал:** ${how}\n**Telegram:** ${tg}\n**VK:** ${vk}\n**Ранг:** ${rank}\n**Блокировки:** ${bans || 'Нет'}\n**Готов к обзвону:** ${call}\n**Микрофон:** ${mic}`;
+                
+                const success = await sendToDiscord(ADMIN_WEBHOOK, content, null);
+                
+                if (success) {
+                    localStorage.setItem('last_admin_submit', Date.now().toString());
+                    showMessage('Анкета успешно отправлена', 'success');
+                    this.reset();
+                    updateWarnings();
+                } else {
+                    showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
+                }
+                
+                submitButton.disabled = false;
+                submitButton.textContent = 'Отправить анкету';
+            });
+            
+            updateWarnings();
+        });
+    </script>
+</body>
+</html>
