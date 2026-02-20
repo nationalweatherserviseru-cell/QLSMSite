@@ -30,10 +30,45 @@
             margin-bottom: 30px;
         }
 
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         header h1 {
             color: #fff;
             text-shadow: 0 0 5px #7289da;
             font-size: 2.5em;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+        }
+
+        .main-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .main-nav a:hover {
+            background: #5865f2;
+        }
+
+        .main-nav a.active {
+            background: #5865f2;
         }
 
         main {
@@ -81,6 +116,56 @@
             width: 100%;
             max-width: 350px;
             height: 500px;
+        }
+
+        .rules-section {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #444;
+        }
+
+        .rules-section h2 {
+            color: #5865f2;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .rules-section h3 {
+            color: #fff;
+            margin: 20px 0 10px 0;
+        }
+
+        .rules-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rules-section li {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .rules-section li:before {
+            content: "•";
+            color: #5865f2;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+        }
+
+        .warning-red {
+            color: #ff4444;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            background: rgba(255, 68, 68, 0.1);
         }
 
         .tabs {
@@ -133,6 +218,7 @@
             text-decoration: none;
             display: block;
             border-bottom: 1px solid #3a3a3a;
+            cursor: pointer;
         }
 
         .dropdown-content a:hover {
@@ -264,89 +350,262 @@
             text-align: center;
             margin-bottom: 10px;
         }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background: #2a2a2a;
+            margin: 15% auto;
+            padding: 30px;
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            color: #ff4444;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .confirm-btn {
+            background: #ff4444;
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            background: #cc0000;
+        }
+
+        .cancel-btn {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .cancel-btn:hover {
+            background: #444;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="header-top">
             <h1>Qullysuim Community</h1>
-        </header>
+        </div>
 
-        <main>
-            <div class="left-column">
-                <div class="description">
-                    <h2>Qullysuim — Сервер для общения и дружбы.</h2>
-                    <p>Позитивное, открытое и дружелюбное комьюнити без токсичности. Найди единомышленников для разговоров, игр и совместного досуга. Мы ждем именно тебя! Начни знакомство прямо сейчас.</p>
-                </div>
-                <div class="widget">
-                    <iframe src="https://discord.com/widget?id=1455582068695109777&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <div class="main-nav">
+            <a onclick="showPage('home')" class="active">Главная</a>
+            <a onclick="showPage('complaint-page')">Жалоба</a>
+            <a onclick="showPage('appeal-page')">Апелляции</a>
+            <a onclick="showPage('rules-page')">Правила</a>
+            <div class="dropdown" style="margin-left: auto;">
+                <a class="dropbtn">Заявки ▼</a>
+                <div class="dropdown-content">
+                    <a onclick="showPage('admin-form-page')">Администрация</a>
+                    <a class="disabled-link">Разработчики (Набор закрыт)</a>
                 </div>
             </div>
+        </div>
 
-            <div class="right-column">
-                <div class="tabs">
-                    <button class="tab-button active" onclick="showTab('complaint')">Жалоба</button>
-                    <div class="dropdown">
-                        <button class="tab-button dropbtn">Заявки ▼</button>
-                        <div class="dropdown-content">
-                            <a href="#" onclick="showTab('admin-form')">Администрация</a>
-                            <a href="#" class="disabled-link" onclick="showTab('dev-form')">Разработчики (Набор закрыт)</a>
-                        </div>
+        <!-- Модальное окно подтверждения -->
+        <div id="confirmModal" class="modal">
+            <div class="modal-content">
+                <h3>⚠️ Подтверждение</h3>
+                <p>Вы уверены, что хотите подать апелляцию?</p>
+                <p style="color: #ffaa00;">Следующую апелляцию вы сможете подать только через 2 дня!</p>
+                <div class="modal-buttons">
+                    <button class="confirm-btn" onclick="submitAppeal()">Да, подать</button>
+                    <button class="cancel-btn" onclick="closeModal()">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главная страница -->
+        <div id="home" class="page active">
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="description">
+                        <h2>Qullysuim — Сервер для общения и дружбы.</h2>
+                        <p>Позитивное, открытое и дружелюбное комьюнити без токсичности. Найди единомышленников для разговоров, игр и совместного досуга. Мы ждем именно тебя! Начни знакомство прямо сейчас.</p>
+                    </div>
+                    <div class="widget">
+                        <iframe src="https://discord.com/widget?id=1455582068695109777&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                     </div>
                 </div>
-
-                <div id="complaint" class="tab-content active">
-                    <h3>Подать жалобу на участника</h3>
-                    <form id="complaintForm">
-                        <input type="text" id="offender-name" placeholder="Ник нарушителя" required>
-                        <textarea id="violation-desc" placeholder="Что он нарушил?" rows="3" required></textarea>
-                        <input type="file" id="proof-file" accept="image/*,.pdf,.txt,.doc,.docx">
-                        <div class="file-info">Максимальный размер файла: 8 МБ</div>
-                        <div id="complaintWarning" class="cooldown-warning" style="display: none;"></div>
-                        <button type="submit" id="complaintSubmit">Отправить жалобу</button>
-                    </form>
-                </div>
-
-                <div id="admin-form" class="tab-content">
-                    <h3>Анкета в Администрацию</h3>
-                    <form id="adminForm">
-                        <input type="text" id="admin-discord" placeholder="Ваш ник в Discord" required>
-                        <input type="number" id="admin-age" placeholder="Сколько вам лет?" required>
-                        <input type="text" id="admin-how" placeholder="Как узнали о сервере?" required>
-                        <input type="text" id="admin-tg" placeholder="Ваш Telegram юзернейм" required>
-                        <input type="url" id="admin-vk" placeholder="Ваш VK (ссылка)" required>
-                        <input type="text" id="admin-rank" placeholder="Ваш ранг (/rank в корзине)" required>
-                        <textarea id="admin-bans" placeholder="Были ли блокировки? Если да, то какие?" rows="2"></textarea>
-                        <label>
-                            <input type="checkbox" id="admin-call"> Готовы пройти обзвон?
-                        </label>
-                        <label>
-                            <input type="checkbox" id="admin-mic"> Есть микрофон?
-                        </label>
-                        <div id="adminWarning" class="cooldown-warning" style="display: none;"></div>
-                        <button type="submit" id="adminSubmit">Отправить анкету</button>
-                    </form>
-                </div>
-
-                <div id="dev-form" class="tab-content">
-                    <h3 style="color: gray; text-align: center;">Набор разработчиков временно закрыт</h3>
-                    <p style="color: #aaa; text-align: center; margin-top: 20px;">Следите за обновлениями на сервере Discord</p>
+                <div class="right-column">
+                    <h3>Добро пожаловать!</h3>
+                    <p>Используйте меню сверху для навигации по сайту.</p>
                 </div>
             </div>
-        </main>
+        </div>
+
+        <!-- Страница жалобы -->
+        <div id="complaint-page" class="page">
+            <h2>Подать жалобу на участника</h2>
+            <form id="complaintForm">
+                <input type="text" id="offender-name" placeholder="Ник нарушителя" required>
+                <textarea id="violation-desc" placeholder="Что он нарушил?" rows="3" required></textarea>
+                <input type="file" id="proof-file" accept="image/*,.pdf,.txt,.doc,.docx">
+                <div class="file-info">Максимальный размер файла: 8 МБ</div>
+                <div id="complaintWarning" class="cooldown-warning" style="display: none;"></div>
+                <button type="submit" id="complaintSubmit">Отправить жалобу</button>
+            </form>
+        </div>
+
+        <!-- Страница апелляции -->
+        <div id="appeal-page" class="page">
+            <h2>Апелляция на наказание</h2>
+            <form id="appealForm">
+                <input type="text" id="appeal-nick" placeholder="Ваш ник в Discord" required>
+                <textarea id="appeal-reason" placeholder="Почему мы должны снять с вас наказание?" rows="5" required></textarea>
+                <div id="appealWarning" class="cooldown-warning" style="display: none;"></div>
+                <button type="button" id="appealSubmit" onclick="showConfirmModal()">Отправить апелляцию</button>
+            </form>
+        </div>
+
+      <!-- Страница правил -->
+<div id="rules-page" class="page">
+    <div class="rules-section">
+        <h2>Основные правила Discord сервера</h2>
+        
+        <h3>1. Общие правила</h3>
+        <ul>
+            <li>1.1 Запрещена ненормативная лексика. Мат разрешен в неоскорбительном для других пользователей контексте. Однако злоупотребление матом наказывается (Запрещается использование нецензурных слов в профиле — в никах/аватарах)</li>
+            <li>1.2 Запрещено писать бессмысленную или малосодержательную информацию, не несущую смысловой нагрузки (флудить).</li>
+            <li>1.3 Запрещено флудить смайликами. (Эмодзи)</li>
+            <li>1.4 Запрещено писать сообщения сплошными заглавными буквами, сплошным жирным шрифтом, курсивом, подчеркнутым шрифтом. При этом сообщение считается нарушающим данное правило, если такого рода текстом набрано более трети всего сообщения.</li>
+            <li>1.5 Запрещено обсуждать действия администрации.</li>
+            <li>1.6 Запрещается размещение сообщений, написанных транслитом, то есть русский текст должен быть написан кириллицей, а не латинскими буквами. Если у вас нет возможности писать кириллицей, пользуйтесь переводчиком транслита, прежде чем разместить сообщение на нашем Discord-сервере.</li>
+            <li>1.7 Сообщения на коверканном языке, чрезмерное использование сленга, жаргонизмов запрещено.</li>
+            <li>1.8 Запрещается публикация материалов грубого, насильственного характера, жестокости, призывы к таковым, сообщения экстремистского толка.</li>
+            <li>1.9 Запрещается оскорблять других пользователей и администрации канала — будь то прямым или косвенным образом. Оскорбление остается нарушением, даже если оно скрыто под сарказмом или косвенной инсинуацией.</li>
+            <li>1.10 Запрещается дискриминация по любому признаку — расовому, национальному, гражданскому, половому, религиозному, возрастному, по инвалидности, роду занятий или сексуальной ориентации.</li>
+            <li>1.11 Запрещается оскорбление чувств верующих, высмеивание религиозных убеждений, религиозных символов и святынь.</li>
+            <li>1.12 Запрещается разжигание межрелигиозной розни и вражды.</li>
+            <li>1.13 Запрещается употребление уничижительных определений различных национальностей, народов и групп, таких как "пиндосы", "хохлы", "москали" и пр.</li>
+            <li>1.14 Запрещается цитировать личную переписку из привата или других средств общения одних участников форума с другими без явного согласия обеих сторон.</li>
+            <li>1.15 Запрещается разглашение чьей бы то ни было персональной информации. Это относится как к собственным данным, так и полученным от других пользователей посредством приватной части форума и прочих средств коммуникации (например, такой как адреса, телефоны, email, финансовых данных, перепост личных фото форумчан, профилей в соцсетях и пр.).</li>
+            <li>1.16 Запрещается обсуждение и публичное осуждение действий представителей Команды — админов и модераторов. Если вы уверены, что модератор превышает свои полномочия, обратитесь к администратору.</li>
+            <li>1.17 Запрещена публикация сообщений, призывающих к суициду.</li>
+            <li>1.18 Запрещено использования клавиши Caps Lock без необходимости.</li>
+            <li>1.19 Запрещено переводить музыкального бота в другие каналы</li>
+        </ul>
+
+        <h3>2. Ники</h3>
+        <ul>
+            <li>2.1 Запрещены ники не носящие какого-либо смысла и нечитабельные ники (Пример: "asd", "123", "sfkwerqeq1" и т. д.).</li>
+            <li>2.2 Запрещены ники, которые тем или иным образом могут оскорбить другого человека.</li>
+            <li>2.3 Запрещены ники содержащие ненормативную лексику.</li>
+            <li>2.4 Запрещается использовать в никах адреса веб–сайтов, адреса email и прочую контактную информацию.</li>
+            <li>2.5 Запрещено использование визуально похожего двойника уже существующий ник.</li>
+        </ul>
+
+        <h3>3. Бан</h3>
+        <ul>
+            <li>3.1 Приглашение на сервер твинк-аккаунтов (перманент бан твинк-аккаунту).</li>
+            <li>3.2 Рецедив нарушений (бан сутки).</li>
+            <li>3.3 Накрутка уровня карается обнулением уровня. (При повторных действиях - бан)</li>
+        </ul>
+
+        <h3>Информация</h3>
+        <ul>
+            <li>Администрация проекта в праве в любой момент, без объяснения причин, прекратить предоставление доступа к серверу конкретному пользователю или подсети в целом.</li>
+            <li>Администрация проекта в праве в любой момент, без предупреждения, изменить текущие правила.</li>
+            <li>При осознании вины в нарушениях правил, игрок может быть разбанен (на усмотрение администрации проекта).</li>
+            <li>Ваш компьютер и вы отвечаете за нарушения. Нас не интересует, нарушил ли Ваш друг/брат/мама/папа/кот правила для всех одни.</li>
+        </ul>
+
+        <div class="warning-red">
+            Администрация решает сама какое наказание выдать
+        </div>
+    </div>
+</div>
+
+        <!-- Страница анкеты администрации -->
+        <div id="admin-form-page" class="page">
+            <h2>Анкета в Администрацию</h2>
+            <form id="adminForm">
+                <input type="text" id="admin-discord" placeholder="Ваш ник в Discord" required>
+                <input type="number" id="admin-age" placeholder="Сколько вам лет?" required>
+                <input type="text" id="admin-how" placeholder="Как узнали о сервере?" required>
+                <input type="text" id="admin-tg" placeholder="Ваш Telegram юзернейм" required>
+                <input type="url" id="admin-vk" placeholder="Ваш VK (ссылка)" required>
+                <input type="text" id="admin-rank" placeholder="Ваш ранг (/rank в корзине)" required>
+                <textarea id="admin-bans" placeholder="Были ли блокировки? Если да, то какие?" rows="2"></textarea>
+                <label>
+                    <input type="checkbox" id="admin-call"> Готовы пройти обзвон?
+                </label>
+                <label>
+                    <input type="checkbox" id="admin-mic"> Есть микрофон?
+                </label>
+                <div id="adminWarning" class="cooldown-warning" style="display: none;"></div>
+                <button type="submit" id="adminSubmit">Отправить анкету</button>
+            </form>
+        </div>
     </div>
 
     <script>
         const COMPLAINT_COOLDOWN = 60 * 60 * 1000;
         const ADMIN_COOLDOWN = 24 * 60 * 60 * 1000;
+        const APPEAL_COOLDOWN = 2 * 24 * 60 * 60 * 1000;
         const MAX_FILE_SIZE = 8 * 1024 * 1024;
+
+        let pendingAppeal = null;
 
         function checkCooldown(type) {
             const lastSubmit = localStorage.getItem(`last_${type}_submit`);
             if (!lastSubmit) return { canSubmit: true, timeLeft: 0 };
             
             const timePassed = Date.now() - parseInt(lastSubmit);
-            const cooldownTime = type === 'complaint' ? COMPLAINT_COOLDOWN : ADMIN_COOLDOWN;
+            let cooldownTime;
+            
+            if (type === 'complaint') cooldownTime = COMPLAINT_COOLDOWN;
+            else if (type === 'admin') cooldownTime = ADMIN_COOLDOWN;
+            else if (type === 'appeal') cooldownTime = APPEAL_COOLDOWN;
             
             if (timePassed < cooldownTime) {
                 const timeLeft = cooldownTime - timePassed;
@@ -360,6 +619,10 @@
                 const minutes = Math.floor(ms / 60000);
                 const seconds = Math.floor((ms % 60000) / 1000);
                 return `${minutes} минут ${seconds} секунд`;
+            } else if (type === 'appeal') {
+                const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+                const hours = Math.floor((ms % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                return `${days} дней ${hours} часов`;
             } else {
                 const hours = Math.floor(ms / 3600000);
                 const minutes = Math.floor((ms % 3600000) / 60000);
@@ -370,11 +633,14 @@
         function updateWarnings() {
             const complaintStatus = checkCooldown('complaint');
             const adminStatus = checkCooldown('admin');
+            const appealStatus = checkCooldown('appeal');
             
             const complaintWarning = document.getElementById('complaintWarning');
             const adminWarning = document.getElementById('adminWarning');
+            const appealWarning = document.getElementById('appealWarning');
             const complaintBtn = document.getElementById('complaintSubmit');
             const adminBtn = document.getElementById('adminSubmit');
+            const appealBtn = document.getElementById('appealSubmit');
 
             if (!complaintStatus.canSubmit) {
                 const timeLeft = formatTimeLeft(complaintStatus.timeLeft, 'complaint');
@@ -395,6 +661,16 @@
                 adminWarning.style.display = 'none';
                 adminBtn.disabled = false;
             }
+
+            if (!appealStatus.canSubmit) {
+                const timeLeft = formatTimeLeft(appealStatus.timeLeft, 'appeal');
+                appealWarning.textContent = `Вы уже подавали апелляцию. Следующую можно подать через ${timeLeft}`;
+                appealWarning.style.display = 'block';
+                appealBtn.disabled = true;
+            } else {
+                appealWarning.style.display = 'none';
+                appealBtn.disabled = false;
+            }
         }
 
         function showMessage(text, type) {
@@ -402,29 +678,82 @@
             messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
             messageDiv.textContent = text;
             
-            const activeTab = document.querySelector('.tab-content.active');
-            activeTab.insertBefore(messageDiv, activeTab.firstChild);
+            const activePage = document.querySelector('.page.active');
+            activePage.insertBefore(messageDiv, activePage.firstChild);
             
             setTimeout(() => {
                 messageDiv.remove();
             }, 5000);
         }
 
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
+            document.querySelectorAll('.main-nav a').forEach(link => {
+                link.classList.remove('active');
             });
             
-            document.getElementById(tabId).classList.add('active');
+            document.getElementById(pageId).classList.add('active');
             
-            if (tabId === 'complaint') {
-                const buttons = document.querySelectorAll('.tab-button');
-                buttons.forEach(btn => btn.classList.remove('active'));
-                if (buttons.length > 0) buttons[0].classList.add('active');
+            const activeLink = Array.from(document.querySelectorAll('.main-nav a')).find(
+                link => link.getAttribute('onclick')?.includes(pageId)
+            );
+            if (activeLink) {
+                activeLink.classList.add('active');
             }
+            
+            updateWarnings();
+        }
+
+        function showConfirmModal() {
+            const status = checkCooldown('appeal');
+            if (!status.canSubmit) {
+                return;
+            }
+            
+            const nick = document.getElementById('appeal-nick').value;
+            const reason = document.getElementById('appeal-reason').value;
+            
+            if (!nick || !reason) {
+                showMessage('Заполните все поля', 'error');
+                return;
+            }
+            
+            pendingAppeal = { nick, reason };
+            document.getElementById('confirmModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            pendingAppeal = null;
+        }
+
+        async function submitAppeal() {
+            if (!pendingAppeal) return;
+            
+            closeModal();
+            
+            const submitButton = document.getElementById('appealSubmit');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Отправка...';
+            
+            const content = `**Новая апелляция**\n**Ник:** ${pendingAppeal.nick}\n**Причина:** ${pendingAppeal.reason}`;
+            
+            const success = await sendToAPI('/api/send-appeal', content, null);
+            
+            if (success) {
+                localStorage.setItem('last_appeal_submit', Date.now().toString());
+                showMessage('Апелляция успешно отправлена', 'success');
+                document.getElementById('appealForm').reset();
+                updateWarnings();
+            } else {
+                showMessage('Ошибка при отправке. Попробуйте позже.', 'error');
+            }
+            
+            submitButton.disabled = false;
+            submitButton.textContent = 'Отправить апелляцию';
+            pendingAppeal = null;
         }
 
         async function sendToAPI(endpoint, content, file) {
