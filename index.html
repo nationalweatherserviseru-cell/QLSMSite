@@ -337,9 +337,6 @@
     </div>
 
     <script>
-        const COMPLAINT_WEBHOOK = "https://discord.com/api/webhooks/1464345787067535452/4RI1poDTMkQRhFGRyPbycsGFZHXza0b55gCuELtXAMEzNkovCdV4-4zPegnf1M4XeMJy";
-        const ADMIN_WEBHOOK = "https://discord.com/api/webhooks/1474132958758572083/GJez82EbK5h5TLuQ9uhQgyDj8L_PIu8I7URC0MAdV9KaTkgz5AlmsIk-Hm7VhYJZ04uV";
-
         const COMPLAINT_COOLDOWN = 60 * 60 * 1000;
         const ADMIN_COOLDOWN = 24 * 60 * 60 * 1000;
         const MAX_FILE_SIZE = 8 * 1024 * 1024;
@@ -430,7 +427,7 @@
             }
         }
 
-        async function sendToDiscord(webhookUrl, content, file) {
+        async function sendToAPI(endpoint, content, file) {
             try {
                 const formData = new FormData();
                 formData.append('content', content);
@@ -439,11 +436,13 @@
                     formData.append('file', file);
                 }
                 
-                const response = await fetch(webhookUrl, {
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     body: formData
                 });
-                return response.ok;
+                
+                const data = await response.json();
+                return data.success;
             } catch (error) {
                 console.error('Ошибка:', error);
                 return false;
@@ -478,7 +477,7 @@
                 
                 const content = `**Новая жалоба**\n**Нарушитель:** ${offenderName}\n**Нарушение:** ${violationDesc}`;
                 
-                const success = await sendToDiscord(COMPLAINT_WEBHOOK, content, proofFile);
+                const success = await sendToAPI('/api/send-complaint', content, proofFile);
                 
                 if (success) {
                     localStorage.setItem('last_complaint_submit', Date.now().toString());
@@ -517,7 +516,7 @@
                 
                 const content = `**Новая анкета в Администрацию**\n**Discord ник:** ${discordNick}\n**Возраст:** ${age}\n**Как узнал:** ${how}\n**Telegram:** ${tg}\n**VK:** ${vk}\n**Ранг:** ${rank}\n**Блокировки:** ${bans || 'Нет'}\n**Готов к обзвону:** ${call}\n**Микрофон:** ${mic}`;
                 
-                const success = await sendToDiscord(ADMIN_WEBHOOK, content, null);
+                const success = await sendToAPI('/api/send-admin', content, null);
                 
                 if (success) {
                     localStorage.setItem('last_admin_submit', Date.now().toString());
