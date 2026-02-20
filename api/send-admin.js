@@ -6,7 +6,24 @@ export default async function handler(req, res) {
     const ADMIN_WEBHOOK = "https://discord.com/api/webhooks/1474132958758572083/GJez82EbK5h5TLuQ9uhQgyDj8L_PIu8I7URC0MAdV9KaTkgz5AlmsIk-Hm7VhYJZ04uV";
 
     try {
-        const { content } = req.body;
+        const buffers = [];
+        for await (const chunk of req) {
+            buffers.push(chunk);
+        }
+        const data = Buffer.concat(buffers).toString();
+        const boundary = req.headers['content-type'].split('boundary=')[1];
+        
+        const parts = data.split(`--${boundary}`);
+        let content = '';
+        
+        for (const part of parts) {
+            if (part.includes('name="content"')) {
+                const match = part.match(/Content-Disposition: form-data; name="content"\r\n\r\n(.*?)\r\n$/s);
+                if (match) {
+                    content = match[1].trim();
+                }
+            }
+        }
 
         const response = await fetch(ADMIN_WEBHOOK, {
             method: 'POST',
